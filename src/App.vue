@@ -1,4 +1,11 @@
 <template>
+  <div class="warpper">
+    <div class="position">
+      <span class="iconfont position__icon">&#xe619;</span>
+      北京理工大学国防科技园2号楼10层
+      <span class="iconfont position__notice">&#xe9cf;</span>
+    </div>
+  </div>
   <div class="docker">
     <div class="docker__item docker__item--active">
       <div class="iconfont">&#xe61b;</div>
@@ -20,7 +27,36 @@
 </template>
 
 <style lang="scss">
-@import './style/viriables.scss';
+@import "./style/viriables.scss";
+@import "./style/mixins.scss";
+
+.warpper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0.5rem;
+  right: 0;
+  padding: 0 0.18rem;
+}
+.position {
+  position: relative;
+  padding: 0.16rem 0.24rem 0.16rem 0;
+  line-height: 0.22rem;
+  font-size: 0.16rem;
+  @include ellipsis;
+  color: $content-fontcolor;
+  .position__icon {
+    position: relative;
+    top: 0.01rem;
+    font-size: 0.2rem;
+  }
+  .position__notice {
+    position: absolute;
+    right: 0;
+    top: 0.17rem;
+    font-size: 0.2rem;
+  }
+}
 
 .docker {
   display: flex;
