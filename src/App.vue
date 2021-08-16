@@ -87,8 +87,60 @@
         <p class="icons__item__desc">红包套餐</p>
       </div>
     </div>
-    <div class="gap">
-
+    <div class="gap"></div>
+    <div class="nearby">
+      <div class="nearby__title">附近店铺</div>
+      <div class="nearby__item">
+        <img
+          class="nearby__item__img"
+          src="http://www.dell-lee.com/imgs/vue3/near.png"
+        />
+        <div class="nearby__content">
+          <div class="nearby__content__title">沃尔玛</div>
+          <div class="nearby__content__tags">
+            <sapn class="nearby__content__tag">月售1万+</sapn>
+            <sapn class="nearby__content__tag">起送¥0</sapn>
+            <sapn class="nearby__content__tag">基础运费¥5</sapn>
+          </div>
+          <p class="nearby__content__highlight">
+            VIP尊享满89元减4元运费券（每月3张）
+          </p>
+        </div>
+      </div>
+      <div class="nearby__item">
+        <img
+          class="nearby__item__img"
+          src="http://www.dell-lee.com/imgs/vue3/near.png"
+        />
+        <div class="nearby__content">
+          <div class="nearby__content__title">沃尔玛</div>
+          <div class="nearby__content__tags">
+            <sapn class="nearby__content__tag">月售1万+</sapn>
+            <sapn class="nearby__content__tag">起送¥0</sapn>
+            <sapn class="nearby__content__tag">基础运费¥5</sapn>
+          </div>
+          <p class="nearby__content__highlight">
+            VIP尊享满89元减4元运费券（每月3张）
+          </p>
+        </div>
+      </div>
+      <div class="nearby__item">
+        <img
+          class="nearby__item__img"
+          src="http://www.dell-lee.com/imgs/vue3/near.png"
+        />
+        <div class="nearby__content">
+          <div class="nearby__content__title">沃尔玛</div>
+          <div class="nearby__content__tags">
+            <sapn class="nearby__content__tag">月售1万+</sapn>
+            <sapn class="nearby__content__tag">起送¥0</sapn>
+            <sapn class="nearby__content__tag">基础运费¥5</sapn>
+          </div>
+          <p class="nearby__content__highlight">
+            VIP尊享满89元减4元运费券（每月3张）
+          </p>
+        </div>
+      </div>
     </div>
   </div>
   <div class="docker">
@@ -116,12 +168,13 @@
 @import "./style/mixins.scss";
 
 .warpper {
+  overflow-y: auto;
   position: absolute;
   left: 0;
   top: 0;
-  bottom: 0.5rem;
+  bottom: .5rem;
   right: 0;
-  padding: 0 0.18rem;
+  padding: 0 .18rem .01rem .18rem;
 }
 .position {
   position: relative;
@@ -181,15 +234,56 @@
     }
     &__desc {
       text-align: center;
-      margin: .06rem 0 .16rem 0;
+      margin: 0.06rem 0 0.16rem 0;
       color: $content-fontcolor;
     }
   }
 }
 .gap {
-  height: .1rem;
+  height: 0.1rem;
   background: $content-bgColor;
-  margin: 0 -.18rem;
+  margin: 0 -0.18rem;
+}
+.nearby {
+  &__title {
+    font-size: 0.18rem;
+    font-weight: normal;
+    line-height: 0.25rem;
+    color: $content-fontcolor;
+    margin: 0.16rem 0 0.02rem 0;
+  }
+  &__item {
+    display: flex;
+    margin-top: .12rem;
+    &__img {
+      width: 0.56rem;
+      height: 0.56rem;
+      margin: 0 0.16rem 0 0;
+    }
+  }
+  &__content {
+    width: 100%;
+    border-bottom: 1px solid $content-bgColor;
+    &__title {
+      font-size: 0.16rem;
+      line-height: 0.22rem;
+      color: $content-fontcolor;
+    }
+    &__tags {
+      margin: 0.08rem 0;
+      line-height: 0.18rem;
+      font-size: 0.13rem;
+      color: $content-fontcolor;
+    }
+    &__tag {
+      margin-right: .16rem;
+    }
+    &__highlight {
+      color: #e93b3b;
+      line-height: 0.18rem;
+      font-size: 0.13rem;
+    }
+  }
 }
 
 .docker {
@@ -216,6 +310,7 @@
     }
   }
   &__title {
+    // 让浏览器显示小于12px的字符
     font-size: 0.2rem;
     transform: scale(0.5, 0.5);
     transform-origin: center top;
