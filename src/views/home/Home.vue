@@ -22,9 +22,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../style/viriables.scss';
-@import '../../style/mixins.scss';
-
 .warpper {
   overflow-y: auto;
   position: absolute;
