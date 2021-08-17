@@ -39,13 +39,13 @@ export default {
       {
         imgUrl: 'http://www.dell-lee.com/imgs/vue3/near.png',
         title: '沃尔玛',
-        contentTags: ['月售1万+', '起送¥0', '基础运费¥5'],
+        tags: ['月售1万+', '起送¥0', '基础运费¥5'],
         highlight: 'VIP尊享满89元减4元运费券（每月3张）'
       },
       {
         imgUrl: 'http://www.dell-lee.com/imgs/vue3/near.png',
         title: '沃尔玛',
-        contentTags: ['月售1万+', '起送¥0', '基础运费¥5'],
+        tags: ['月售1万+', '起送¥0', '基础运费¥5'],
         highlight: 'VIP尊享满89元减4元运费券（每月3张）'
       }
     ]
@@ -55,7 +55,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '../../style/viriables.scss';
 
 .nearby {
