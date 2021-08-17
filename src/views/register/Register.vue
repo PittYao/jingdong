@@ -5,22 +5,26 @@
       src="http://www.dell-lee.com/imgs/vue3/user.png"
     />
     <div class="warpper__input">
-      <input
-        class="warpper__input__content"
-        placeholder="请输入手机号"
-        v-model="userInput.usename"
-      />
+      <input class="warpper__input__content" placeholder="请输入手机号" />
     </div>
     <div class="warpper__input">
       <input
         class="warpper__input__content"
         placeholder="请输入密码"
         type="password"
-        v-model="userInput.password"
       />
     </div>
-    <div class="warpper__login__button" @click="handleLogin">登陆</div>
-    <div class="warpper__login__link" @click="handleRegister">立即注册</div>
+    <div class="warpper__input">
+      <input
+        class="warpper__input__content"
+        placeholder="确认密码"
+        type="password"
+      />
+    </div>
+    <div class="warpper__register__button" @click="handleRegister">注册</div>
+    <div class="warpper__register__link" @click="handelLoginClick">
+      已有账号去登陆
+    </div>
   </div>
 </template>
 
@@ -61,7 +65,7 @@
       }
     }
   }
-  &__login__button {
+  &__register__button {
     line-height: 0.48rem;
     background: #0091ff;
     box-shadow: 0 0.04rem 0.08rem 0 rgba(0, 145, 255, 0.32);
@@ -72,7 +76,7 @@
     font-size: 0.16rem;
     color: #fff;
   }
-  &__login__link {
+  &__register__link {
     text-align: center;
     font-size: 0.14rem;
     color: $content-notice-fontcolor;
@@ -82,43 +86,22 @@
 
 <script>
 import { useRouter } from 'vue-router'
-import { post } from '../../utils/request'
-import { reactive } from '@vue/reactivity'
-
 export default {
-  name: 'Login',
+  name: 'Register',
   setup (props) {
-    // 定义DTO
-    const userInput = reactive({
-      usename: '',
-      password: ''
-    })
-
     // 获取路由
     const route = useRouter()
-
-    const handleLogin = async () => {
-      try {
-        const result = await post('/api/auth/login', userInput)
-        console.log(result)
-        // 认证成功,跳转路由
-        if (result?.error === 0) {
-          localStorage.isLogin = true
-          // 操作路由跳转
-          route.push({ name: 'Home' })
-        } else {
-          alert(result?.message)
-        }
-      } catch (error) {
-        alert('登录失败')
-      }
-    }
-
     const handleRegister = () => {
-      route.push({ name: 'Register' })
+      localStorage.isLogin = true
+      // 操作路由跳转
+      route.push({ name: 'Home' })
     }
 
-    return { handleLogin, handleRegister, userInput }
+    const handelLoginClick = () => {
+      route.push({ name: 'Login' })
+    }
+
+    return { handleRegister, handelLoginClick }
   }
 }
 </script>
