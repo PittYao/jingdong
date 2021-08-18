@@ -104,7 +104,7 @@ const useLoginEffect = (showToast) => {
         return
       }
 
-      const result = await post('/api/auth/login', data)
+      const result = await post('/auth/login', data)
 
       // 认证成功
       if (result?.error === 0) {

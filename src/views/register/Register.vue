@@ -110,7 +110,7 @@ const useRegisterEffect = (showToast) => {
 
   const handleRegisterClick = async () => {
     try {
-      const result = await post('/api/auth/register', data, {})
+      const result = await post('/auth/register', data, {})
 
       if (result?.error === 0) {
         localStorage.isLogin = true
