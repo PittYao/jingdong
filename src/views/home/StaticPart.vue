@@ -6,7 +6,7 @@
   </div>
   <div class="search">
     <span class="iconfont">&#xe728;</span>
-    <span class="search__text">山姆会员商店优惠商品</span>
+    <input class="search__title" placeholder="山姆会员商店优惠商品"/>
   </div>
   <div class="banner">
     <img
@@ -63,7 +63,11 @@
   &__title {
     font-size: 0.14rem;
     display: inline-block;
-  }
+    border: none;
+    background: #f5f5f5;
+    outline: none;
+    width: 80%;
+}
 }
 .banner {
   // padding-bottom防止图片抖动

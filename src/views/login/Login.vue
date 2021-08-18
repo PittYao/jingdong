@@ -99,8 +99,13 @@ const useLoginEffect = (showToast) => {
 
   const handleLogin = async () => {
     try {
-      const result = await post('11/api/auth/login', data)
-      console.log(result)
+      if (data.username === '' || data.password === '') {
+        showToast('账号或密码不能为空')
+        return
+      }
+
+      const result = await post('/api/auth/login', data)
+
       // 认证成功
       if (result?.error === 0) {
         localStorage.isLogin = true
