@@ -5,14 +5,18 @@
       src="http://www.dell-lee.com/imgs/vue3/user.png"
     />
     <div class="warpper__input">
-      <input class="warpper__input__content" placeholder="请输入手机号" v-model="data.username" />
+      <input
+        class="warpper__input__content"
+        placeholder="请输入手机号"
+        v-model="username"
+      />
     </div>
     <div class="warpper__input">
       <input
         class="warpper__input__content"
         placeholder="请输入密码"
         type="password"
-        v-model="data.password"
+        v-model="password"
       />
     </div>
     <div class="warpper__input">
@@ -22,11 +26,13 @@
         type="password"
       />
     </div>
-    <div class="warpper__register__button" @click="handleRegister">注册</div>
+    <div class="warpper__register__button" @click="handleRegisterClick">
+      注册
+    </div>
     <div class="warpper__register__link" @click="handelLoginClick">
       已有账号去登陆
     </div>
-    <Toast v-if="toastData.showToast" :message="toastData.toastMsg"/>
+    <Toast v-if="show" :message="toastMsg" />
   </div>
 </template>
 
@@ -90,44 +96,68 @@
 import { post } from '../../utils/request'
 import { useRouter } from 'vue-router'
 import Toast, { useToastEffect } from '../../components/Toast.vue'
+import { toRefs } from '@vue/reactivity'
+
+// 注册逻辑
+const useRegisterEffect = (showToast) => {
+  const route = useRouter()
+
+  // 定义model
+  const data = {
+    username: '',
+    password: ''
+  }
+
+  const handleRegisterClick = async () => {
+    try {
+      const result = await post('/api/auth/register', data, {})
+
+      if (result?.error === 0) {
+        localStorage.isLogin = true
+        // 操作路由跳转
+        route.push({ name: 'Home' })
+      } else {
+        showToast('注册失败')
+      }
+    } catch (error) {
+      showToast('请求失败')
+    }
+  }
+
+  const { username, password } = toRefs(data)
+
+  return { username, password, handleRegisterClick }
+}
+
+// 登录跳转
+const useLoginEffect = () => {
+  const route = useRouter()
+
+  const handelLoginClick = () => {
+    route.push({ name: 'Login' })
+  }
+
+  return { handelLoginClick }
+}
 
 export default {
   name: 'Register',
   components: { Toast },
   setup (props) {
-    // 获取路由
-    const route = useRouter()
-
-    // 定义model
-    const data = {
-      username: '',
-      password: ''
-    }
-
     // 引用弹框
-    const { toastData, showToast } = useToastEffect()
+    const { show, toastMsg, showToast } = useToastEffect()
+    const { username, password, handleRegisterClick } = useRegisterEffect(showToast)
+    const { handelLoginClick } = useLoginEffect()
 
-    const handleRegister = async () => {
-      try {
-        const result = await post('/api/auth/register', data, {})
-
-        if (result?.error === 0) {
-          localStorage.isLogin = true
-          // 操作路由跳转
-          route.push({ name: 'Home' })
-        } else {
-          showToast('注册失败')
-        }
-      } catch (error) {
-        showToast('请求失败')
-      }
+    return {
+      handleRegisterClick,
+      handelLoginClick,
+      username,
+      password,
+      show,
+      toastMsg,
+      showToast
     }
-
-    const handelLoginClick = () => {
-      route.push({ name: 'Login' })
-    }
-
-    return { handleRegister, handelLoginClick, data, toastData, showToast }
   }
 }
 </script>

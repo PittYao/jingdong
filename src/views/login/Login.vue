@@ -8,7 +8,7 @@
       <input
         class="warpper__input__content"
         placeholder="请输入手机号"
-        v-model="data.usename"
+        v-model="username"
       />
     </div>
     <div class="warpper__input">
@@ -16,12 +16,12 @@
         class="warpper__input__content"
         placeholder="请输入密码"
         type="password"
-        v-model="data.password"
+        v-model="password"
       />
     </div>
     <div class="warpper__login__button" @click="handleLogin">登陆</div>
     <div class="warpper__login__link" @click="handleRegister">立即注册</div>
-    <Toast v-if="toastData.showToast" :message="toastData.toastMsg" />
+    <Toast v-if="show" :message="toastMsg" />
   </div>
 </template>
 
@@ -84,46 +84,74 @@
 <script>
 import { useRouter } from 'vue-router'
 import { post } from '../../utils/request'
-import { reactive } from 'vue'
+import { reactive, toRefs } from 'vue'
 import Toast, { useToastEffect } from '../../components/Toast.vue'
+
+// 登录逻辑
+const useLoginEffect = (showToast) => {
+  const route = useRouter()
+
+  // 定义model
+  const data = reactive({
+    username: '',
+    password: ''
+  })
+
+  const handleLogin = async () => {
+    try {
+      const result = await post('11/api/auth/login', data)
+      console.log(result)
+      // 认证成功
+      if (result?.error === 0) {
+        localStorage.isLogin = true
+        // 操作路由跳转到首页
+        route.push({ name: 'Home' })
+      } else {
+        showToast('登录失败')
+      }
+    } catch (error) {
+      showToast('请求失败')
+    }
+  }
+
+  // 解构
+  const { username, password } = toRefs(data)
+
+  return { username, password, handleLogin }
+}
+
+// 注册跳转
+const useRegisterEffect = () => {
+  const route = useRouter()
+
+  const handleRegister = () => {
+    route.push({ name: 'Register' })
+  }
+
+  return { handleRegister }
+}
 
 export default {
   name: 'Login',
   components: { Toast },
+  // setup 只控制流程
   setup (props) {
-    // 获取路由
-    const route = useRouter()
-    // 定义model
-    const data = reactive({
-      usename: '',
-      password: ''
-    })
-    // 引用toast
-    const { toastData, showToast } = useToastEffect()
+    // 引入弹窗
+    const { show, toastMsg, showToast } = useToastEffect()
+    // 引入登录逻辑
+    const { username, password, handleLogin } = useLoginEffect(showToast)
+    // 引入注册逻辑
+    const { handleRegister } = useRegisterEffect()
 
-    // 登录逻辑
-    const handleLogin = async () => {
-      try {
-        const result = await post('/api/auth/login', data)
-        console.log(result)
-        // 认证成功
-        if (result?.error === 0) {
-          localStorage.isLogin = true
-          // 操作路由跳转到首页
-          route.push({ name: 'Home' })
-        } else {
-          showToast('登录失败')
-        }
-      } catch (error) {
-        showToast('请求失败')
-      }
+    return {
+      handleLogin,
+      handleRegister,
+      username,
+      password,
+      show,
+      toastMsg,
+      showToast
     }
-
-    const handleRegister = () => {
-      route.push({ name: 'Register' })
-    }
-
-    return { handleLogin, handleRegister, data, toastData, showToast }
   }
 }
 </script>

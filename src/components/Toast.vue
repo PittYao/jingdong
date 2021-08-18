@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { reactive } from 'vue'
+import { reactive, toRefs } from 'vue'
 export default {
   name: 'Toast',
   props: ['message']
@@ -13,23 +13,24 @@ export default {
 export const useToastEffect = () => {
   // 定义toast
   const toastData = reactive({
-    showToast: false,
+    show: false,
     toastMsg: ''
   })
 
   // 定义显示提示框逻辑
   const showToast = (msg) => {
-    toastData.showToast = true
+    toastData.show = true
     toastData.toastMsg = msg
 
     // 2秒后取消显示
     setTimeout(() => {
-      toastData.showToast = false
+      toastData.show = false
       toastData.toastMsg = ''
     }, 2000)
   }
 
-  return { toastData, showToast }
+  const { show, toastMsg } = toRefs(toastData)
+  return { show, toastMsg, showToast }
 }
 
 </script>
